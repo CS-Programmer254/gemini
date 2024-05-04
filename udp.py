@@ -4,10 +4,13 @@ import socket
 def sent(server_socket:socket.socket,message:bytes,client_address)->bool:
     # Get the length of the message
     length = len(message)
+
     # Send the length of the message to the client
     server_socket.sendto(str(length).encode(),client_address)
+
     # Receive acknowledgement from the client
     ack, _ = server_socket.recvfrom(16)
+    
     print('received acknowledgement:',ack)
     server_socket.sendto(message,client_address)
     response, _ = server_socket.recvfrom(16)
